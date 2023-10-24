@@ -39,13 +39,11 @@ public class AuthService {
 
 
     public Users register(RegisterRequest registerRequest){
-        System.out.println("dang ki");
         Users user = new Users(
                 registerRequest.getUsername()
                 ,registerRequest.getEmail()
                 ,registerRequest.getFirstName()
                 ,registerRequest.getLastName()
-                ,registerRequest.getPhone()
                 ,passwordEncoder.encode(registerRequest.getPassword())
         );
 

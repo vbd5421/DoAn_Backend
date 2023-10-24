@@ -30,8 +30,6 @@ public class Users {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "phone")
-    private String phone;
 
     @Column(name = "password",nullable = false)
     @JsonIgnore
@@ -42,12 +40,11 @@ public class Users {
                                   inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Roles> roles;
 
-    public Users(String userName, String firstName, String lastName, String email, String phone, String password) {
+    public Users(String userName, String email, String firstName, String lastName, String password) {
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.phone = phone;
         this.password = password;
     }
 }
