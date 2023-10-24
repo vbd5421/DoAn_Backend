@@ -14,12 +14,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 
 
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.util.List;
 
 
 @Configuration
@@ -29,17 +26,8 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
 
     private final JwtAuthenticationFilter jwtAuthFilter;
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-            throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        // Password encoder, để Spring Security sử dụng mã hóa mật khẩu người dùng
-        return new BCryptPasswordEncoder();
-    }
+    private final AuthenticationProvider authenticationProvider;
 
     private static final String[] AUTH_WHITELIST = { "/auth/**","/number/**","/blog/**",
             "/user/**","/news/**","/sliders/**","/tImage/**",
@@ -65,6 +53,7 @@ public class SecurityConfig {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter,UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
