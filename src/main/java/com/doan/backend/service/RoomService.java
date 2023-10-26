@@ -16,10 +16,10 @@ public class RoomService {
     RoomRepository roomRepository;
     @Autowired
     HotelRepository hotelRepository;
-    List<Room> getListRoomOfHotel(Long hotelId) {
+    public List<Room> getListRoomOfHotel(Long hotelId) {
         return roomRepository.getListRoomOfHotel(hotelId);
     }
-    Room createOrUpdate(Long hotelId,Room room) {
+    public Room createOrUpdate(Long hotelId,Room room) {
         Room roomNew = new Room();
         Hotel hotel = hotelRepository.findById(hotelId).get();
         if(roomNew.getId() != null) {
@@ -34,5 +34,11 @@ public class RoomService {
         roomNew.setHotel(hotel);
         return roomRepository.save(room);
 
+    }
+    public Room changeStatus(Long roomId) {
+        Room room = roomRepository.findById(roomId)
+                .orElseThrow(() -> new ResourceException("không tìm thấy phòng"));
+        room.setStatus(1L);
+        return roomRepository.save(room);
     }
 }
