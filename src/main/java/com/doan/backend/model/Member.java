@@ -5,16 +5,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+
 @Entity
-@Table
 @Data
+@Table(name = "member")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Booking {
+public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Date createDate;
-    private Date endDate;
+    private String fullName;
+    private String description;
+    private String position;
+    private String degree;
 }

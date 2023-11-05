@@ -11,17 +11,13 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Room {
+public class Introduce {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String type;
-    private Double price;
-    // 0. còn trống,1. đã đặt
-    private Long status;
+
+    private String content;
     private String description;
-    @ManyToOne
-    @JoinColumn(name = "hotel_id")
-    private Hotel hotel;
+    private String email;
+    private String phone;
 }
