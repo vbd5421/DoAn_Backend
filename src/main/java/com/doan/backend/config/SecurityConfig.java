@@ -29,7 +29,7 @@ public class SecurityConfig {
 
     private final AuthenticationProvider authenticationProvider;
 
-    private static final String[] AUTH_WHITELIST = { "/auth/**","/admin/**","/api/**",
+    private static final String[] AUTH_WHITELIST = { "/auth/**","/admin/login",
             "/number/**","/blog/**",
             "/user/**","/news/**","/sliders/**","/tImage/**",
             "/s/file/**","/customer/**","/images/**","/recruit/**","/role/**",
