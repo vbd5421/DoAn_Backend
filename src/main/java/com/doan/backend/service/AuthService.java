@@ -50,7 +50,7 @@ public class AuthService {
         List<String> strRoles =registerRequest.getRole();
         List<Roles> roles = new ArrayList<>();
         if (strRoles == null) {
-            Roles userRole = roleRepository.findByRoleName("USER")
+            Roles userRole = roleRepository.findByRoleName("ADMIN")
                     .orElseThrow(() -> new ResourceException("Không tìm thấy quyền cho người dùng"));
             roles.add(userRole);
         }
