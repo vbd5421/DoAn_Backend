@@ -24,7 +24,7 @@ public class TypicalNumberController {
     @GetMapping("")
     public Page<TypicalNumberDTO> searchTitleAndDescription(
             @RequestParam(name="pageNo",defaultValue = "1")int page,
-            @RequestParam(name="pageSize",defaultValue = "3")int size,
+            @RequestParam(name="pageSize",defaultValue = "5")int size,
             @RequestParam(name = "search",required = false)String searchInput)
     {
         Pageable pageable = PageRequest.of(page-1, size, Sort.by("id").descending());
