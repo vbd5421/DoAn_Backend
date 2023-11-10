@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 public interface ProjectRepository extends JpaRepository<Project,Long> {
     @Query("select p from Project p " +
             "where (:name is null or p.name = :name) " +
-            "and (:id is null or p.id = :id) " +
             "order by p.createDate desc ")
-    Page<Project> getAllProject(@Param("id") Long id,@Param("name") String name, Pageable pageable);
+    Page<Project> getAllProject(@Param("name") String name, Pageable pageable);
 }

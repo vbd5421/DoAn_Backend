@@ -24,8 +24,8 @@ public class ProjectService {
     ProjectRepository projectRepository;
     @Autowired
     MemberRepository memberRepository;
-    public List<ProjectDTO> getAllProject(Long id,String name,Pageable pageable) {
-        List<Project> projects = projectRepository.getAllProject(id,name,pageable).toList();
+    public List<ProjectDTO> getAllProject(String name,Pageable pageable) {
+        List<Project> projects = projectRepository.getAllProject(name,pageable).toList();
         List<ProjectDTO> projectList = projects.stream().map(
                 project -> new ProjectDTO(
                         project.getName(),
@@ -39,6 +39,21 @@ public class ProjectService {
 
         return projectList;
     }
+    public ProjectDTO getProjectById(Long id) {
+        Project project = projectRepository.findById(id)
+                .orElseThrow(() -> new ResourceException("không tìm thấy"));
+        List<String> members = memberRepository.getListMemberByProduct(project.getId());
+        ProjectDTO projectDTO = new ProjectDTO(
+                project.getName(),
+                project.getContent(),
+                project.getDescription(),
+                project.getCreateDate(),
+                project.getStatus(),
+                members
+        );
+        return projectDTO;
+    }
+
     public Project createOrUpdate(Project project,List<Long> member) {
         Project newProject = new Project();
         if(project.getId() != null) {

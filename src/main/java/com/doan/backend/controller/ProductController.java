@@ -21,11 +21,14 @@ public class ProductController {
     @GetMapping("")
     ResponseEntity<?> getAllProduct(@RequestParam(name="pageNo",defaultValue = "1")int page,
                                     @RequestParam(name="pageSize",defaultValue = "4")int size,
-                                    @RequestParam(name="id",required = false)Long id,
                                     @RequestParam(name="name",required = false)String name) {
         Pageable pageable = PageRequest.of(page-1, size);
-        return ResponseEntity.ok(productService.getAllProduct(id,name,pageable));
+        return ResponseEntity.ok(productService.getAllProduct(name,pageable));
 
+    }
+    @GetMapping("/{id}")
+    ResponseEntity<?> getProjectById(@PathVariable Long id) {
+        return ResponseEntity.ok(productService.getProductById(id));
     }
     @PostMapping("/create")
     ResponseEntity<?> createproduct(@RequestBody Product product,

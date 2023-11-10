@@ -19,11 +19,14 @@ public class ProjectController {
     @GetMapping("")
     ResponseEntity<?> getAllProject(@RequestParam(name="pageNo",defaultValue = "1")int page,
                                     @RequestParam(name="pageSize",defaultValue = "4")int size,
-                                    @RequestParam(name="id",required = false)Long id,
                                     @RequestParam(name="name",required = false)String name) {
         Pageable pageable = PageRequest.of(page-1, size);
-        return ResponseEntity.ok(projectService.getAllProject(id,name,pageable));
+        return ResponseEntity.ok(projectService.getAllProject(name,pageable));
 
+    }
+    @GetMapping("/{id}")
+    ResponseEntity<?> getProjectById(@PathVariable Long id) {
+        return ResponseEntity.ok(projectService.getProjectById(id));
     }
     @PostMapping("/create")
     ResponseEntity<?> createProject(@RequestBody Project project,

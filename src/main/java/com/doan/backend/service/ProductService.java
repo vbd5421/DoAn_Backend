@@ -22,8 +22,8 @@ public class ProductService {
     ProductRepository productRepository;
     @Autowired
     MemberRepository memberRepository;
-    public List<ProductDTO> getAllProduct(Long id,String name,Pageable pageable) {
-        List<Product> products = productRepository.getAllProduct(id,name,pageable).toList();
+    public List<ProductDTO> getAllProduct(String name,Pageable pageable) {
+        List<Product> products = productRepository.getAllProduct(name,pageable).toList();
         List<ProductDTO> productList = products.stream().map(
             product -> new ProductDTO(
                 product.getTitle(),
@@ -36,6 +36,19 @@ public class ProductService {
             )
         ).collect(Collectors.toList());
         return productList;
+    }
+    public ProductDTO getProductById(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceException("Không tìm thấy sản phẩm"));
+        return new ProductDTO(
+                product.getTitle(),
+                product.getContent(),
+                product.getDescription(),
+                product.getDate(),
+                product.getImage().getPathUrl(),
+                product.getUrl(),
+                memberRepository.getListMemberByProduct(product.getId())
+        );
     }
     public Product createOrUpdate(Product product,List<Long> member) {
         Product newProduct = new Product();
