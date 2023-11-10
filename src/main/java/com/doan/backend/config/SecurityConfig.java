@@ -29,13 +29,16 @@ public class SecurityConfig {
 
     private final AuthenticationProvider authenticationProvider;
 
-    private static final String[] AUTH_WHITELIST = { "/auth/**","/admin/login",
-            "/number/**","/blog/**",
-            "/user/**","/news/**","/sliders/**","/tImage/**",
-            "/s/file/**","/customer/**","/images/**","/recruit/**","/role/**",
-            "/nav/**", "/comment/**", "/post/**", "/product/**","/contact/**",
-            "/about/**", "/hashtag/**", "/category/**","/history/**","/permission/**",
-            "/bpost/**","/tImage/**","/history/log","/static/**","/address/**","/module/**"};
+    private static final String[] AUTH_WHITELIST = { "/auth/**", "/admin/user",
+//            "/admin/login",
+//            "/number/**","/blog/**",
+            "/api/**","/user/**","/role/**",
+//            "/news/**","/sliders/**","/tImage/**",
+//            "/s/file/**","/customer/**","/images/**","/recruit/**",
+//            "/nav/**", "/comment/**", "/post/**", "/product/**","/contact/**",
+//            "/about/**", "/hashtag/**", "/category/**","/history/**","/permission/**",
+//            "/bpost/**","/tImage/**","/history/log","/static/**","/address/**","/module/**"
+    };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
