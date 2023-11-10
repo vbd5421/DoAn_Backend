@@ -41,4 +41,14 @@ public class Product {
             inverseJoinColumns = @JoinColumn(name = "member_id"))
     private Set<Member> members;
 
+    public Product(Long id, String title, String content, String description, Date date, Image image, String url, Boolean active) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.description = description;
+        this.date = date;
+        this.image = image;
+        this.url = url;
+        this.active = active;
+    }
 }

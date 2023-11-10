@@ -22,6 +22,9 @@ public class Project {
     private String description;
     private String content;
     private Date createDate;
+    private Date updateDate;
+
+
     //0, đang triển khai;1 đã hoàn thành
     private Long status;
     @ManyToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -29,4 +32,13 @@ public class Project {
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "member_id"))
     private Set<Member> members;
+    public Project(Long id, String name, String description, String content, Date createDate, Long status) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.content = content;
+        this.createDate = createDate;
+        this.status = status;
+    }
+
 }
