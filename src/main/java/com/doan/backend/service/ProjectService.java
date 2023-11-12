@@ -56,10 +56,10 @@ public class ProjectService {
 
     public Project createOrUpdate(Project project,List<Long> member) {
         Project newProject = new Project();
-        if(project.getId() != null) {
-            newProject = projectRepository.findById(newProject.getId())
+        if (project.getId() != null) {
+            newProject = projectRepository.findById(project.getId())
                     .orElseThrow(() -> new ResourceException("Không tìm thấy project"));
-        }else {
+        } else {
             newProject.setCreateDate(new Date());
         }
         newProject.setName(project.getName());
@@ -68,12 +68,16 @@ public class ProjectService {
         newProject.setDescription(project.getDescription());
         newProject.setStatus(0L);
         List<Member> members = new ArrayList<>();
-        for(Long id : member) {
+        for (Long id : member) {
             Member mem = memberRepository.findById(id)
                     .orElseThrow(() -> new ResourceException("không tìm thấy nhân viên"));
             members.add(mem);
         }
         newProject.setMembers(new HashSet<>(members));
         return projectRepository.save(newProject);
+    }
+    public void deleteProject(Long id) {
+        Project project = projectRepository.findById(id)
+                .orElseThrow(() -> new ResourceException("Không tìm thấy project"));
     }
 }

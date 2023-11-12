@@ -70,4 +70,10 @@ public class ProductService {
         newProduct.setMembers(new HashSet<>(members));
         return productRepository.save(product);
     }
+
+    public void deleteProduct(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceException("Không tìm thấy sản phẩm"));
+        productRepository.delete(product);
+    }
 }

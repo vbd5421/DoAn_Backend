@@ -6,6 +6,7 @@ import com.doan.backend.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,5 +38,10 @@ public class ProjectController {
     ResponseEntity<?> updateProject(@RequestBody Project project,
                                     @RequestParam(name="listMember")List<Long> member) {
         return ResponseEntity.ok(projectService.createOrUpdate(project,member));
+    }
+    @PostMapping("/delete/{id}")
+    ResponseEntity<?> deleteProject(@PathVariable Long id) {
+        projectService.deleteProject(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
