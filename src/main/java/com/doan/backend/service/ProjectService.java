@@ -66,9 +66,11 @@ public class ProjectService {
         if(file!=null){
             newProject.setImage(fileService.uploadImage(file));
         }
-        List<Member> members = new ArrayList<>();
-        newProject.setMembers(new HashSet<>(projectDTO.getMembers()));
-        newProject.setMembers(new HashSet<>(members));
+        if(projectDTO.getMembers() != null) {
+            newProject.setMembers(new HashSet<>(projectDTO.getMembers()));
+        }
+
+
         return projectRepository.save(newProject);
     }
     public void deleteProject(Long id) {

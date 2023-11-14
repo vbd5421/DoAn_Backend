@@ -58,12 +58,13 @@ public class ProductService {
         newProduct.setContent(productDTO.getContent());
         newProduct.setDescription(productDTO.getDescription());
         newProduct.setUrl(productDTO.getUrl());
-        List<Member> members = new ArrayList<>();
+
         if(file != null) {
             newProduct.setImage(fileService.uploadImage(file));
         }
-        newProduct.setMembers(new HashSet<>(productDTO.getMembers()));
-        newProduct.setMembers(new HashSet<>(members));
+        if(productDTO.getMembers() != null ) {
+            newProduct.setMembers(new HashSet<>(productDTO.getMembers()));
+        }
         return productRepository.save(newProduct);
     }
 

@@ -27,7 +27,7 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.getProjectById(id));
     }
     @PostMapping("/create")
-    ResponseEntity<?> createProject(@RequestBody ProjectDTO project,
+    ResponseEntity<?> createProject(@RequestPart ProjectDTO project,
                                     @RequestPart(required = false) MultipartFile file) throws IOException {
         return ResponseEntity.ok(projectService.createOrUpdate(project,file));
     }
