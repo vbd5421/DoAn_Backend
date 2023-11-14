@@ -11,7 +11,9 @@ import com.doan.backend.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -20,59 +22,52 @@ import java.util.stream.Collectors;
 
 @Service
 public class ProjectService {
+
     @Autowired
     ProjectRepository projectRepository;
+
     @Autowired
     MemberRepository memberRepository;
-    public List<ProjectDTO> getAllProject(String name,Pageable pageable) {
-        List<Project> projects = projectRepository.getAllProject(name,pageable).toList();
-        List<ProjectDTO> projectList = projects.stream().map(
-                project -> new ProjectDTO(
-                        project.getName(),
-                        project.getContent(),
-                        project.getDescription(),
-                        project.getCreateDate(),
-                        project.getStatus(),
-                        memberRepository.getListMemberByProduct(project.getId())
-                )
-        ).collect(Collectors.toList());
 
-        return projectList;
+    @Autowired
+    private FileService fileService;
+
+    public List<Project> getAllProject(String name) {
+       return projectRepository.getAllProject(name);
     }
     public ProjectDTO getProjectById(Long id) {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new ResourceException("không tìm thấy"));
-        List<String> members = memberRepository.getListMemberByProduct(project.getId());
         ProjectDTO projectDTO = new ProjectDTO(
+                project.getId(),
                 project.getName(),
                 project.getContent(),
                 project.getDescription(),
                 project.getCreateDate(),
                 project.getStatus(),
-                members
+                memberRepository.getListMemberByProject(project.getId())
         );
         return projectDTO;
     }
 
-    public Project createOrUpdate(Project project,List<Long> member) {
+    public Project createOrUpdate(ProjectDTO projectDTO, MultipartFile file) throws IOException {
         Project newProject = new Project();
-        if (project.getId() != null) {
-            newProject = projectRepository.findById(project.getId())
+        if (projectDTO.getId() != null) {
+            newProject = projectRepository.findById(projectDTO.getId())
                     .orElseThrow(() -> new ResourceException("Không tìm thấy project"));
         } else {
             newProject.setCreateDate(new Date());
         }
-        newProject.setName(project.getName());
+        newProject.setName(projectDTO.getName());
         newProject.setUpdateDate(new Date());
-        newProject.setContent(project.getContent());
-        newProject.setDescription(project.getDescription());
+        newProject.setContent(projectDTO.getContent());
+        newProject.setDescription(projectDTO.getDescription());
         newProject.setStatus(0L);
-        List<Member> members = new ArrayList<>();
-        for (Long id : member) {
-            Member mem = memberRepository.findById(id)
-                    .orElseThrow(() -> new ResourceException("không tìm thấy nhân viên"));
-            members.add(mem);
+        if(file!=null){
+            newProject.setImage(fileService.uploadImage(file));
         }
+        List<Member> members = new ArrayList<>();
+        newProject.setMembers(new HashSet<>(projectDTO.getMembers()));
         newProject.setMembers(new HashSet<>(members));
         return projectRepository.save(newProject);
     }

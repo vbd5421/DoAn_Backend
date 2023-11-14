@@ -1,5 +1,6 @@
 package com.doan.backend.controller;
 
+import com.doan.backend.dto.ProductDTO;
 import com.doan.backend.model.Product;
 
 import com.doan.backend.service.ProductService;
@@ -10,7 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -20,11 +23,8 @@ public class ProductController {
     @Autowired
     ProductService productService;
     @GetMapping("")
-    ResponseEntity<?> getAllProduct(@RequestParam(name="pageNo",defaultValue = "1")int page,
-                                    @RequestParam(name="pageSize",defaultValue = "4")int size,
-                                    @RequestParam(name="name",required = false)String name) {
-        Pageable pageable = PageRequest.of(page-1, size);
-        return ResponseEntity.ok(productService.getAllProduct(name,pageable));
+    ResponseEntity<?> getAllProduct(@RequestParam(name="name",required = false)String name) {
+        return ResponseEntity.ok(productService.getAllProduct(name));
 
     }
     @GetMapping("/{id}")
@@ -32,14 +32,14 @@ public class ProductController {
         return ResponseEntity.ok(productService.getProductById(id));
     }
     @PostMapping("/create")
-    ResponseEntity<?> createproduct(@RequestBody Product product,
-                                    @RequestParam(name="listMember") List<Long> member) {
-        return ResponseEntity.ok(productService.createOrUpdate(product,member));
+    ResponseEntity<?> createproduct(@RequestPart ProductDTO product,
+                                    @RequestPart(required = false) MultipartFile file) throws IOException {
+        return ResponseEntity.ok(productService.createOrUpdate(product,file));
     }
     @PostMapping("/update")
-    ResponseEntity<?> updateproduct(@RequestBody Product product,
-                                    @RequestParam(name="listMember")List<Long> member) {
-        return ResponseEntity.ok(productService.createOrUpdate(product,member));
+    ResponseEntity<?> updateproduct(@RequestPart ProductDTO product,
+                                    @RequestPart(required = false) MultipartFile file) throws IOException {
+        return ResponseEntity.ok(productService.createOrUpdate(product,file));
     }
     @PostMapping("/delete/{id}")
     ResponseEntity<?> deleteProduct(@PathVariable Long id) {

@@ -1,5 +1,6 @@
 package com.doan.backend.dto;
 
+import com.doan.backend.model.Member;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProjectDTO {
+    private Long id;
     private String name;
     private String description;
     private String content;
@@ -18,5 +20,5 @@ public class ProjectDTO {
     //0, đang triển khai;1 đã hoàn thành
     private Long status;
 
-    private List<String> membersName;
+    private List<Member> members;
 }

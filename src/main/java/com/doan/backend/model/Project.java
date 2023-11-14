@@ -23,8 +23,9 @@ public class Project {
     private String content;
     private Date createDate;
     private Date updateDate;
-
-
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="image_id")
+    private Image image;
     //0, đang triển khai;1 đã hoàn thành
     private Long status;
     @ManyToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)

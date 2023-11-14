@@ -16,6 +16,6 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     @Query("select p from Product p " +
             "where (:name is null or p.title = :name)" +
             "order by p.date desc ")
-    Page<Product> getAllProduct(@Param("name") String name, Pageable pageable);
+    List<Product> getAllProduct(@Param("name") String name);
 
 }

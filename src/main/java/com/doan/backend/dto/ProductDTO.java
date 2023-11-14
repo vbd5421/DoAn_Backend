@@ -1,5 +1,6 @@
 package com.doan.backend.dto;
 
+import com.doan.backend.model.Member;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductDTO {
+    private Long id;
     private String title;
     private String content;
     private String description;
@@ -20,5 +22,5 @@ public class ProductDTO {
 
     private String url;
 
-    private List<String> membersName;
+    private List<Member> members;
 }
