@@ -35,7 +35,7 @@ public class Product {
 
     private Boolean active;
 
-    @ManyToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany (cascade = CascadeType.MERGE)
     @JoinTable(name = "product_member",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "member_id"))
@@ -44,8 +44,8 @@ public class Product {
     public Product(Long id, String title, String content, String description, Date date, Image image, String url, Boolean active) {
         this.id = id;
         this.title = title;
-        this.content = content;
         this.description = description;
+        this.content = content;
         this.date = date;
         this.image = image;
         this.url = url;

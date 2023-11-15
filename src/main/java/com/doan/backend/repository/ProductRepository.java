@@ -14,8 +14,7 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product,Long> {
     @Query("select p from Product p " +
-            "where (:name is null or p.title = :name)" +
-            "order by p.date desc ")
+            "where (:name is null or  ( LOWER(p.title)  LIKE LOWER(concat('%', :name , '%'))))")
     Page<Product> getAllProduct(@Param("name") String name,Pageable pageable);
 
 }

@@ -28,7 +28,7 @@ public class Project {
     private Image image;
     //0, đang triển khai;1 đã hoàn thành
     private Long status;
-    @ManyToMany (cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany (cascade = CascadeType.MERGE)
     @JoinTable(name = "project_member",
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "member_id"))

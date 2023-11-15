@@ -42,8 +42,8 @@ public class ProjectService {
         ProjectDTO projectDTO = new ProjectDTO(
                 project.getId(),
                 project.getName(),
-                project.getContent(),
                 project.getDescription(),
+                project.getContent(),
                 project.getCreateDate(),
                 project.getStatus(),
                 memberRepository.getListMemberByProject(project.getId())
@@ -77,5 +77,6 @@ public class ProjectService {
     public void deleteProject(Long id) {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new ResourceException("Không tìm thấy project"));
+        projectRepository.delete(project);
     }
 }

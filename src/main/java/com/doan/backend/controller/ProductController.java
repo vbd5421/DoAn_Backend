@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class ProductController {
     ResponseEntity<?> getAllProduct(@RequestParam(name="pageNo",defaultValue = "1")int page,
                                     @RequestParam(name="pageSize",defaultValue = "4")int size,
                                     @RequestParam(name="name",required = false)String name) {
-        Pageable pageable = PageRequest.of(page-1, size);
+        Pageable pageable = PageRequest.of(page-1, size, Sort.by(Sort.Direction.DESC,"date"));
         return ResponseEntity.ok(productService.getAllProduct(name,pageable));
 
     }
@@ -39,7 +40,7 @@ public class ProductController {
                                     @RequestPart(required = false) MultipartFile file) throws IOException {
         return ResponseEntity.ok(productService.createOrUpdate(product,file));
     }
-    @PostMapping("/update")
+    @PostMapping("/update/{id}")
     ResponseEntity<?> updateproduct(@RequestPart ProductDTO product,
                                     @RequestPart(required = false) MultipartFile file) throws IOException {
         return ResponseEntity.ok(productService.createOrUpdate(product,file));

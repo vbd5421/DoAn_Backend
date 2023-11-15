@@ -72,6 +72,7 @@ public class ProductService {
     public void deleteProduct(Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceException("Không tìm thấy sản phẩm"));
+        System.out.println(product.getContent());
         productRepository.delete(product);
     }
 }
