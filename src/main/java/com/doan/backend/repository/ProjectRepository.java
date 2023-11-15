@@ -16,5 +16,5 @@ public interface ProjectRepository extends JpaRepository<Project,Long> {
     @Query("select p from Project p " +
             "where (:name is null or ( LOWER(p.name)  LIKE LOWER(concat('%', :name , '%')))) " +
             "order by p.createDate desc ")
-    List<Project> getAllProject(@Param("name") String name);
+    Page<Project> getAllProject(@Param("name") String name,Pageable pageable);
 }

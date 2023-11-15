@@ -7,6 +7,7 @@ import com.doan.backend.model.Product;
 import com.doan.backend.repository.MemberRepository;
 import com.doan.backend.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,8 +31,8 @@ public class ProductService {
     @Autowired
     FileService fileService;
 
-    public List<Product> getAllProduct(String name) {
-        return productRepository.getAllProduct(name);
+    public Page<Product> getAllProduct(String name, Pageable pageable) {
+        return productRepository.getAllProduct(name,pageable);
     }
     public ProductDTO getProductById(Long id) {
         Product product = productRepository.findById(id)

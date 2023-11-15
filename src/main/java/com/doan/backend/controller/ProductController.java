@@ -23,8 +23,11 @@ public class ProductController {
     @Autowired
     ProductService productService;
     @GetMapping("")
-    ResponseEntity<?> getAllProduct(@RequestParam(name="name",required = false)String name) {
-        return ResponseEntity.ok(productService.getAllProduct(name));
+    ResponseEntity<?> getAllProduct(@RequestParam(name="pageNo",defaultValue = "1")int page,
+                                    @RequestParam(name="pageSize",defaultValue = "4")int size,
+                                    @RequestParam(name="name",required = false)String name) {
+        Pageable pageable = PageRequest.of(page-1, size);
+        return ResponseEntity.ok(productService.getAllProduct(name,pageable));
 
     }
     @GetMapping("/{id}")

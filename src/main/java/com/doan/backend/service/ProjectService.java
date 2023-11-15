@@ -9,6 +9,7 @@ import com.doan.backend.repository.MemberRepository;
 import com.doan.backend.repository.ProductRepository;
 import com.doan.backend.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,8 +33,8 @@ public class ProjectService {
     @Autowired
     private FileService fileService;
 
-    public List<Project> getAllProject(String name) {
-       return projectRepository.getAllProject(name);
+    public Page<Project> getAllProject(String name, Pageable pageable) {
+       return projectRepository.getAllProject(name,pageable);
     }
     public ProjectDTO getProjectById(Long id) {
         Project project = projectRepository.findById(id)
