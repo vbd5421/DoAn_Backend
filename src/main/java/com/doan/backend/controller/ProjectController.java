@@ -31,7 +31,7 @@ public class ProjectController {
                                     @RequestPart(required = false) MultipartFile file) throws IOException {
         return ResponseEntity.ok(projectService.createOrUpdate(project,file));
     }
-    @PostMapping("/update")
+    @PostMapping("/update/{id}")
     ResponseEntity<?> updateProject(@RequestPart ProjectDTO project,
                                     @RequestPart(required = false) MultipartFile file) throws IOException {
         return ResponseEntity.ok(projectService.createOrUpdate(project,file));
