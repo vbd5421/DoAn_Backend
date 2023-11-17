@@ -43,12 +43,13 @@ public class ProductService {
                 product.getContent(),
                 product.getDescription(),
                 product.getDate(),
-                product.getImage().getPathUrl(),
+                product.getImage() != null ? product.getImage().getPathUrl():null,
                 product.getUrl(),
                 memberRepository.getListMemberByProduct(product.getId())
         );
     }
     public Product createOrUpdate(ProductDTO productDTO, MultipartFile file) throws IOException {
+//        System.out.println(productDTO.getContent());
         Product newProduct = new Product();
         if(productDTO.getId() != null) {
             newProduct = productRepository.findById(productDTO.getId())

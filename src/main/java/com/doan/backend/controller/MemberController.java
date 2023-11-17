@@ -14,7 +14,7 @@ public class MemberController {
     MemberService memberService;
     @GetMapping("")
     ResponseEntity<?> getListMember(@RequestParam(name="pageNo",defaultValue = "1")int page,
-                                    @RequestParam(name="pageSize",defaultValue = "4")int size){
+                                    @RequestParam(name="pageSize",defaultValue = "10")int size){
         Pageable pageable = PageRequest.of(page-1, size);
         return ResponseEntity.ok(memberService.getListMember(pageable));
 
