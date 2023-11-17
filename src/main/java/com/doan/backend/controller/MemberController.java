@@ -39,12 +39,12 @@ public class MemberController {
     }
     @PostMapping("/create")
     ResponseEntity<?> addMember(@RequestPart MemberDTO memberDTO,
-                                @RequestPart MultipartFile file) throws IOException {
+                                @RequestPart(required = false) MultipartFile file) throws IOException {
         return ResponseEntity.ok(memberService.AddOrUpdate(memberDTO,file));
     }
-    @PostMapping("/update")
+    @PostMapping("/update/{id}")
     ResponseEntity<?> updateMember(@RequestPart MemberDTO memberDTO,
-                                @RequestPart MultipartFile file) throws IOException {
+                                @RequestPart(required = false) MultipartFile file) throws IOException {
         return ResponseEntity.ok(memberService.AddOrUpdate(memberDTO,file));
     }
     @PostMapping("/delete/{id}")
