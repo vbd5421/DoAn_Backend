@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.io.IOException;
 import java.util.*;
 
 @ControllerAdvice
@@ -15,6 +16,11 @@ public class CustomExceptionHandler {
     @ExceptionHandler({ResourceException.class})
     public ResponseEntity<String> handleResourceNotFoundException(ResourceException ex){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler({IOException.class})
+    public ResponseEntity<String> handleIOEException(IOException ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Không tìm thấy file");
     }
 
 

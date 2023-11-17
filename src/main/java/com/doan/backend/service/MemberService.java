@@ -8,14 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 @Service
 public class MemberService {
     @Autowired
     MemberRepository memberRepository;
-    public Page<Member> getListMember(Pageable pageable){
-        return memberRepository.getListMember(pageable);
+
+    @Autowired
+    FileService fileService;
+    public Page<Member> getListMember(Pageable pageable,String name,String degree,String position){
+        return memberRepository.getListMember(pageable,name,degree,position);
     }
 
     public MemberDTO getMemberbyId(Long id) {
@@ -26,10 +31,42 @@ public class MemberService {
         return new MemberDTO(
                 member.getFullName(),
                 member.getDescription(),
+                member.getImage() != null ? member.getImage().getPathUrl():null,
+                member.getBirthDate(),
+                member.getTimeJoin(),
+                member.getPhone(),
+                member.getEmail(),
                 member.getPosition(),
                 member.getDegree(),
                 listProductName,
-                listProductName
+                listProjectName
         );
     }
+    public Member AddOrUpdate(MemberDTO memberDTO, MultipartFile file) throws IOException {
+        Member member = new Member();
+        if(memberDTO.getId() != null) {
+            member = memberRepository.findById(memberDTO.getId())
+                    .orElseThrow(() -> new ResourceException("Không tìm thấy thành viên"));
+        }
+        member.setFullName(memberDTO.getFullName());
+        member.setDescription(memberDTO.getDescription());
+        member.setBirthDate(memberDTO.getBirthDate());
+        member.setTimeJoin(memberDTO.getTimeJoin());
+        member.setPhone(memberDTO.getPhone());
+        member.setEmail(memberDTO.getEmail());
+        member.setPosition(memberDTO.getPosition());
+        member.setDegree(memberDTO.getDegree());
+        if(file != null) {
+            member.setImage(fileService.uploadImage(file));
+        }
+        return memberRepository.save(member);
+    }
+
+    public void deleteMember(Long id) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new ResourceException("không tìm thấy member"));
+        memberRepository.delete(member);
+    }
+
+
 }
