@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
@@ -17,6 +18,16 @@ public class Member {
     private Long id;
     private String fullName;
     private String description;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="image_id")
+    private Image image;
+    private Date birthDate;
+    private Date timeJoin;
+
+    private String phone;
+    private String email;
+
     private String position;
     private String degree;
 }

@@ -18,7 +18,6 @@ public interface UserRepository extends JpaRepository<Users,Long> {
     Optional<Users> findByUserName(String userName);
     boolean existsByUserName(String userName);
     Optional<Users> findById(Long id);
-    Optional<Users> findByUsername(String username);
 
     @Query("select u from Users u  ORDER BY u.id ASC")
     List<Users> listAll();
