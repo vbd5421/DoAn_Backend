@@ -29,6 +29,7 @@ public class MemberService {
         List<String> listProjectName = memberRepository.getListProjectName(id);
         List<String> listProductName = memberRepository.getListProductName(id);
         return new MemberDTO(
+                member.getId(),
                 member.getFullName(),
                 member.getDescription(),
                 member.getImage() != null ? member.getImage().getPathUrl():null,

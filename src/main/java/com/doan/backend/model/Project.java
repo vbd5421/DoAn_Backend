@@ -19,7 +19,9 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Column(columnDefinition = "text")
     private String description;
+    @Column(columnDefinition = "text")
     private String content;
     private Date createDate;
     private Date updateDate;

@@ -29,10 +29,12 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
 
     @Query(value = "SELECT p.title From member m " +
             "inner join product_member pm on m.id = pm.member_id " +
-            "inner join product p on pm.product_id = p.id",nativeQuery = true)
-    List<String> getListProductName(Long memberId);
+            "inner join product p on pm.product_id = p.id " +
+            "where pm.member_id = :member_id",nativeQuery = true)
+    List<String> getListProductName(@Param("member_id") Long memberId);
     @Query(value = "SELECT p.name From member m " +
             "inner join project_member pm on m.id = pm.member_id " +
-            "inner join project p on pm.project_id = p.id",nativeQuery = true)
-    List<String> getListProjectName(Long memberId);
+            "inner join project p on pm.project_id = p.id " +
+            "where pm.member_id = :member_id",nativeQuery = true)
+    List<String> getListProjectName(@Param("member_id") Long memberId);
 }
