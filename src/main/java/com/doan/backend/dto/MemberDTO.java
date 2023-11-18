@@ -14,7 +14,7 @@ public class MemberDTO {
     private Long id;
     private String fullName;
     private String description;
-    private String image;
+    private Image image;
     private Date birthDate;
     private Date timeJoin;
 
@@ -25,7 +25,7 @@ public class MemberDTO {
     private List<String> productName;
     private List<String> projectName;
 
-    public MemberDTO(String fullName, String description, String image, Date birthDate, Date timeJoin,
+    public MemberDTO(String fullName, String description, Image image, Date birthDate, Date timeJoin,
                      String phone, String email, String position, String degree, List<String> productName,
                      List<String> projectName) {
         this.fullName = fullName;

@@ -44,6 +44,7 @@ public class ProjectService {
                 project.getName(),
                 project.getDescription(),
                 project.getContent(),
+                project.getImage(),
                 project.getCreateDate(),
                 project.getStatus(),
                 memberRepository.getListMemberByProject(project.getId())

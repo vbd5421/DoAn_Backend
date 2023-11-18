@@ -1,5 +1,6 @@
 package com.doan.backend.dto;
 
+import com.doan.backend.model.Image;
 import com.doan.backend.model.Member;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +19,7 @@ public class ProductDTO {
 
     private Date date;
 
-    private String image;
+    private Image image;
 
     private String url;
 

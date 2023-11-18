@@ -43,7 +43,7 @@ public class ProductService {
                 product.getContent(),
                 product.getDescription(),
                 product.getDate(),
-                product.getImage() != null ? product.getImage().getPathUrl():null,
+                product.getImage() != null ? product.getImage():null,
                 product.getUrl(),
                 memberRepository.getListMemberByProduct(product.getId())
         );
