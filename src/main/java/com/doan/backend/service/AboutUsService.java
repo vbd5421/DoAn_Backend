@@ -28,12 +28,12 @@ public class AboutUsService {
     public AboutUs createInformation(AboutUs aboutUs) {
         // get description
         String description = aboutUs.getDescription().trim();
-        if (description.length() == 0 || description.length() > 2000) { // check if empty or too long
+        if (description.isEmpty() || description.length() > 2000) { // check if empty or too long
             throw new ResourceException("Vui lòng nhập miêu tả dưới 2000 ký tự");
         }
         // get content
         String content = aboutUs.getContent().trim();
-        if (content.length() == 0) { // check if content is empty
+        if (content.isEmpty()) { // check if content is empty
             throw new ResourceException("Vui lòng nhập nội dung");
         }
         // get video link
@@ -44,12 +44,12 @@ public class AboutUsService {
         }
 
         String phone = aboutUs.getPhone().trim();
-        if (phone.length() == 0) { // check phone length
+        if (phone.isEmpty()) { // check phone length
             throw new ResourceException("Vui lòng nhập số điện thoại ");
         }
         // get fax
         String fax = aboutUs.getFax().trim();
-        if (fax.length() == 0 || fax.length() > 15) { // check fax length
+        if (fax.isEmpty() || fax.length() > 15) { // check fax length
             throw new ResourceException("Vui lòng nhập số fax dưới 15 ký tự");
         }
         //get email
@@ -59,6 +59,7 @@ public class AboutUsService {
         aboutUs.setDescription(description);
         aboutUs.setContent(content);
         aboutUs.setVideoLINK(aboutUs.getVideoLINK().trim());
+        aboutUs.setContentUav(aboutUs.getContentUav());
         aboutUs.setPhone(phone);
         aboutUs.setFax(fax);
         aboutUs.setEmail(email);
@@ -88,17 +89,17 @@ public class AboutUsService {
         AboutUs aboutUs = getAboutUsInformation(aboutUsDTO.getId());
         // get description
         String description = aboutUsDTO.getDescription().trim();
-        if(description.length() == 0 || description.length() > 500) { // check if empty or too long
+        if(description.isEmpty() || description.length() > 500) { // check if empty or too long
             throw new ResourceException("Vui lòng nhập miêu tả dưới 500 ký tự");
         }
         // get content
         String content = aboutUsDTO.getContent().trim();
-        if(content.length() == 0) { // check if content is empty
+        if(content.isEmpty()) { // check if content is empty
             throw new ResourceException("Vui lòng nhập nội dung");
         }
         // get video link
         String link = aboutUsDTO.getVideoLINK().trim();
-        if(link.length() == 0) { // chick if link is empty  q
+        if(link.isEmpty()) { // chick if link is empty  q
             throw new ResourceException("Vui lòng nhập đường dẫn");
         }
         // get phone number
@@ -108,7 +109,7 @@ public class AboutUsService {
         }
         // get fax
         String fax = aboutUsDTO.getFax().trim();
-        if(fax.length() == 0 || fax.length() >15) { // check fax length
+        if(fax.isEmpty() || fax.length() >15) { // check fax length
             throw new ResourceException("Vui lòng nhập số fax dưới 15 ký tự");
         }
         //get email
@@ -119,6 +120,7 @@ public class AboutUsService {
         aboutUs.setDescription(description);
         aboutUs.setContent(content);
         aboutUs.setVideoLINK(link);
+        aboutUs.setContentUav(aboutUsDTO.getContentUav());
         aboutUs.setPhone(phone);
         aboutUs.setFax(fax);
         aboutUs.setEmail(email);
