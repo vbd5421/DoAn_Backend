@@ -19,7 +19,8 @@ public class AboutUs {
 
     @Column(columnDefinition = "text")
     private String content;
-
+    @Column(columnDefinition = "text")
+    private String contentUav;
     @Column(name = "video_link", columnDefinition = "text")
     private String videoLINK;
 

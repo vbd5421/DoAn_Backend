@@ -11,6 +11,7 @@ public class AboutUsDTO {
     private Long id;
     private String description;
     private String content;
+    private String contentUav;
     private String videoLINK;
     private String phone;
     private String fax;
