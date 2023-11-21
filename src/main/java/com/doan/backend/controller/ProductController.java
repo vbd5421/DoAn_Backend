@@ -5,6 +5,7 @@ import com.doan.backend.model.Product;
 
 import com.doan.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.List;
 
 
@@ -44,6 +46,10 @@ public class ProductController {
     ResponseEntity<?> updateproduct(@RequestPart ProductDTO product,
                                     @RequestPart(required = false) MultipartFile file) throws IOException {
         return ResponseEntity.ok(productService.createOrUpdate(product,file));
+    }
+    @GetMapping("/image/{id}")
+    public ResponseEntity<Resource> getImageByPostId(@PathVariable Long id) throws MalformedURLException {
+        return ResponseEntity.ok(productService.getImageByProductId(id));
     }
     @PostMapping("/delete/{id}")
     ResponseEntity<?> deleteProduct(@PathVariable Long id) {

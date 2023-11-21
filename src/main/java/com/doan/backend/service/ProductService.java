@@ -7,12 +7,17 @@ import com.doan.backend.model.Product;
 import com.doan.backend.repository.MemberRepository;
 import com.doan.backend.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -68,6 +73,21 @@ public class ProductService {
             newProduct.setMembers(new HashSet<>(productDTO.getMembers()));
         }
         return productRepository.save(newProduct);
+    }
+
+    public Resource getImageByProductId(Long id) throws MalformedURLException {
+
+        String imageName = productRepository.getImageByProductId(id);
+        String pathFile  = productRepository.getPathFileByProductId(id);
+        Path imagePath = Paths.get(pathFile + "/" +imageName);
+        Resource imageResource = new UrlResource(imagePath.toUri());
+        if(imageResource.exists() && imageResource.isReadable()){
+            return imageResource;
+        }else{
+//            throw new NoPathFileException("Không tìm thấy đường dẫn ảnh");
+            return null;
+        }
+
     }
 
     public void deleteProduct(Long id) {

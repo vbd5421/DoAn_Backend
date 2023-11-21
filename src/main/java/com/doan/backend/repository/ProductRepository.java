@@ -17,4 +17,9 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
             "where (:name is null or  ( LOWER(p.title)  LIKE LOWER(concat('%', :name , '%'))))")
     Page<Product> getAllProduct(@Param("name") String name,Pageable pageable);
 
+    @Query("SELECT p.image.name FROM Product p WHERE p.id=:id")
+    String getImageByProductId(Long id);
+    @Query("SELECT p.image.pathFile FROM Product p WHERE p.id=:id")
+    String getPathFileByProductId(Long id);
+
 }

@@ -17,4 +17,9 @@ public interface ProjectRepository extends JpaRepository<Project,Long> {
             "where (:name is null or ( LOWER(p.name)  LIKE LOWER(concat('%', :name , '%')))) " +
             "order by p.createDate desc ")
     Page<Project> getAllProject(@Param("name") String name,Pageable pageable);
+
+    @Query("SELECT p.image.name FROM Project p WHERE p.id=:id")
+    String getImageByProjectId(Long id);
+    @Query("SELECT p.image.pathFile FROM Project p WHERE p.id=:id")
+    String getPathFileByProjectId(Long id);
 }

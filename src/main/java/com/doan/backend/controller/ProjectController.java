@@ -4,6 +4,7 @@ package com.doan.backend.controller;
 import com.doan.backend.dto.ProjectDTO;
 import com.doan.backend.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.List;
 
 @RestController
@@ -45,5 +47,9 @@ public class ProjectController {
     ResponseEntity<?> deleteProject(@PathVariable Long id) {
         projectService.deleteProject(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @GetMapping("/image/{id}")
+    public ResponseEntity<Resource> getImageByPostId(@PathVariable Long id) throws MalformedURLException {
+        return ResponseEntity.ok(projectService.getImageByProjectId(id));
     }
 }

@@ -9,12 +9,17 @@ import com.doan.backend.repository.MemberRepository;
 import com.doan.backend.repository.ProductRepository;
 import com.doan.backend.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -74,6 +79,21 @@ public class ProjectService {
 
 
         return projectRepository.save(newProject);
+    }
+
+    public Resource getImageByProjectId(Long id) throws MalformedURLException {
+
+        String imageName = projectRepository.getImageByProjectId(id);
+        String pathFile  = projectRepository.getPathFileByProjectId(id);
+        Path imagePath = Paths.get(pathFile + "/" +imageName);
+        Resource imageResource = new UrlResource(imagePath.toUri());
+        if(imageResource.exists() && imageResource.isReadable()){
+            return imageResource;
+        }else{
+//            throw new NoPathFileException("Không tìm thấy đường dẫn ảnh");
+            return null;
+        }
+
     }
     public void deleteProject(Long id) {
         Project project = projectRepository.findById(id)
