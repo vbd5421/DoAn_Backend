@@ -13,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class MemberService {
     @Autowired
@@ -20,26 +22,22 @@ public class MemberService {
 
     @Autowired
     FileService fileService;
-    public List<MemberDTO> getListMember(Pageable pageable,String name,String degree,String position){
-        List<Member> members = memberRepository.getListMember(pageable,name,degree,position).toList();
-        List<MemberDTO> memberDtos = new ArrayList<>();
-        for (Member member : members) {
-            memberDtos.add(new MemberDTO(
-                    member.getId(),
-                    member.getFullName(),
-                    member.getDescription(),
-                    member.getImage() != null ? member.getImage() : null,
-                    member.getBirthDate(),
-                    member.getTimeJoin(),
-                    member.getPhone(),
-                    member.getEmail(),
-                    member.getPosition(),
-                    member.getDegree(),
-                    memberRepository.getListProjectName(member.getId()),
-                    memberRepository.getListProductName(member.getId())
-            ));
-        }
-        return memberDtos;
+    public Page<MemberDTO> getListMember(Pageable pageable,String name,String degree,String position){
+        Page<Member> members = memberRepository.getListMember(pageable,name,degree,position);
+        return members.map(member -> new MemberDTO(
+                member.getId(), member.getFullName(),
+                member.getDescription(),
+                member.getImage() != null ? member.getImage() : null,
+                member.getBirthDate(),
+                member.getTimeJoin(),
+                member.getPhone(),
+                member.getEmail(),
+                member.getPosition(),
+                member.getDegree(),
+                memberRepository.getListProjectName(member.getId()),
+                memberRepository.getListProductName(member.getId())
+        ));
+
     }
 
     public MemberDTO getMemberbyId(Long id) {
