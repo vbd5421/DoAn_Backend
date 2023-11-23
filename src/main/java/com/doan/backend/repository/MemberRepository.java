@@ -20,12 +20,10 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
             "on m.id = pm.member_id where pm.project_id = :projectId",nativeQuery = true)
     List<Member> getListMemberByProject(Long projectId);
     @Query("SELECT m from Member m " +
-            "where (:name is null or lower(m.fullName) like ('%'||:name||'%')) " +
-            "and (:degree is null or m.degree = :degree) " +
-            "and(:position is null or m.position = :position)")
-    Page<Member> getListMember(Pageable pageable, @Param("name")String name,
-                               @Param("degree")String degree,
-                               @Param("position")String posittion);
+            "where (:si is null or lower(m.fullName) like ('%'||:si||'%')) " +
+            "and (:si is null or m.degree = :si) " +
+            "and(:si is null or m.position = :si)")
+    Page<Member> getListMember(Pageable pageable, @Param("name")String searchInput);
 
     @Query(value = "SELECT p.title From member m " +
             "inner join product_member pm on m.id = pm.member_id " +
@@ -37,4 +35,9 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
             "inner join project p on pm.project_id = p.id " +
             "where pm.member_id = :member_id",nativeQuery = true)
     List<String> getListProjectName(@Param("member_id") Long memberId);
+    @Query("SELECT m.image.name FROM Member m WHERE m.id=:id")
+    String getImageByMemberId(Long id);
+
+    @Query("SELECT m.image.pathFile FROM Member m WHERE m.id=:id")
+    String getPathFileByMember(Long id);
 }

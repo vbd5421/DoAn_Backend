@@ -30,4 +30,5 @@ public class Member {
 
     private String position;
     private String degree;
+
 }

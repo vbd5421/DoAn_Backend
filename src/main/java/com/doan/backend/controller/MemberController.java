@@ -3,6 +3,7 @@ package com.doan.backend.controller;
 import com.doan.backend.dto.MemberDTO;
 import com.doan.backend.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 @RestController
 @RequestMapping("/api/member")
@@ -20,11 +22,9 @@ public class MemberController {
     @GetMapping("")
     ResponseEntity<?> getListMember(@RequestParam(name="pageNo",defaultValue = "1")int page,
                                     @RequestParam(name="pageSize",defaultValue = "10")int size,
-                                    @RequestParam(name = "name",required = false)String name,
-                                    @RequestParam(name = "degree",required = false)String degree,
-                                    @RequestParam(name = "position",required = false)String position){
+                                    @RequestParam(name = "search",required = false)String searchInput){
         Pageable pageable = PageRequest.of(page-1, size);
-        return ResponseEntity.ok(memberService.getListMember(pageable,name,degree,position));
+        return ResponseEntity.ok(memberService.getListMember(pageable,searchInput));
 
     }
 
@@ -46,6 +46,10 @@ public class MemberController {
     ResponseEntity<?> updateMember(@RequestPart MemberDTO memberDTO,
                                 @RequestPart(required = false) MultipartFile file) throws IOException {
         return ResponseEntity.ok(memberService.AddOrUpdate(memberDTO,file));
+    }
+    @GetMapping("/image/{id}")
+    public ResponseEntity<Resource> getImageByPostId(@PathVariable Long id) throws MalformedURLException {
+        return ResponseEntity.ok(memberService.getImageByMemberId(id));
     }
     @PostMapping("/delete/{id}")
     ResponseEntity<?> deleteMember(@PathVariable Long id) {

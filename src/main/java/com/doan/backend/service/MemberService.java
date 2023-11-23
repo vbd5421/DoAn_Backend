@@ -5,12 +5,17 @@ import com.doan.backend.exception.ResourceException;
 import com.doan.backend.model.Member;
 import com.doan.backend.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,8 +27,8 @@ public class MemberService {
 
     @Autowired
     FileService fileService;
-    public Page<MemberDTO> getListMember(Pageable pageable,String name,String degree,String position){
-        Page<Member> members = memberRepository.getListMember(pageable,name,degree,position);
+    public Page<MemberDTO> getListMember(Pageable pageable,String searchInput){
+        Page<Member> members = memberRepository.getListMember(pageable,searchInput);
         return members.map(member -> new MemberDTO(
                 member.getId(), member.getFullName(),
                 member.getDescription(),
@@ -78,6 +83,20 @@ public class MemberService {
             member.setImage(fileService.uploadImage(file));
         }
         return memberRepository.save(member);
+    }
+    public Resource getImageByMemberId(Long id) throws MalformedURLException {
+
+        String imageName = memberRepository.getImageByMemberId(id);
+        String pathFile  = memberRepository.getPathFileByMember(id);
+        Path imagePath = Paths.get(pathFile + "/" +imageName);
+        Resource imageResource = new UrlResource(imagePath.toUri());
+        if(imageResource.exists() && imageResource.isReadable()){
+            return imageResource;
+        }else{
+//            throw new NoPathFileException("Không tìm thấy đường dẫn ảnh");
+            return null;
+        }
+
     }
 
     public void deleteMember(Long id) {
