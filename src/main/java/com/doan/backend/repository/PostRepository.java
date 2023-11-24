@@ -25,13 +25,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query("SELECT p FROM Post p WHERE p.active = true ORDER BY p.id DESC")
     List<Post> listAll();
-    //xay ra truong hop neu khong su dung %:cate% ma chi su dung :cate thi du @RequestParam required = false cate
-    //se tra ve null chu khong phai "" nen khi phan trang voi category response la danh sach rong
-
-//    @Query(value = "SELECT * FROM post p " +
-//            "INNER JOIN category c ON c.category_id = p.category_id " +
-//            "WHERE c.type_name LIKE :cate AND p.title ILIKE :si AND p.description ILIKE :si " +
-//            "AND p.created_date BETWEEN :start AND :end",nativeQuery = true)
 
 
 
@@ -40,14 +33,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "OR LOWER(p.description) LIKE LOWER(concat('%', :si , '%')))) " +
             "AND((:start IS NULL AND :end IS NULL) OR(p.createDate BETWEEN :start AND :end))" +
             "AND p.active=true")
-//    @Query("SELECT p FROM Post p WHERE " +
-//            "(:si IS NULL OR (LOWER(p.title)  LIKE LOWER(concat('%', :si , '%')) " +
-//            "OR LOWER(p.description) LIKE LOWER(concat('%', :si , '%')))) " +
-//            "AND (:cate IS NULL OR p.category.typeName LIKE :cate)" +
-//            "AND p.active=true")
+
     Page<Post> searchTitleDescriptionAndCategory(Pageable pageable,
                                                  @Param("si")String searchInput,
-                                                 @Param("cate") String cate,
                                                  @Param("start")LocalDate start,
                                                  @Param("end")LocalDate end
     );

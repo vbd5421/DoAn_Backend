@@ -23,7 +23,7 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
             "where (:si is null or lower(m.fullName) like ('%'||:si||'%')) " +
             "and (:si is null or m.degree = :si) " +
             "and(:si is null or m.position = :si)")
-    Page<Member> getListMember(Pageable pageable, @Param("name")String searchInput);
+    Page<Member> getListMember(Pageable pageable, @Param("si")String searchInput);
 
     @Query(value = "SELECT p.title From member m " +
             "inner join product_member pm on m.id = pm.member_id " +

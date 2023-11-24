@@ -167,9 +167,9 @@ public class PostService {
     }
 
 
-    public Page<Post> searchTitleAndDescription(Pageable pageable, String searchInput, String cate, String tag, LocalDate start, LocalDate end) {
+    public Page<Post> searchTitleAndDescription(Pageable pageable, String searchInput, LocalDate start, LocalDate end) {
 //        if(start!= null && end!= null){
-        return postRepository.searchTitleDescriptionAndCategory(pageable, searchInput, cate, start, end);
+        return postRepository.searchTitleDescriptionAndCategory(pageable, searchInput, start, end);
 //        }else{
 //            return postRepository.searchTitleAndDescription(pageable,searchInput,cate, tag);
 //        }

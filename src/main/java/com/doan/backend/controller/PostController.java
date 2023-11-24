@@ -104,14 +104,13 @@ public class PostController {
             @RequestParam(name="pageNo",defaultValue = "1")int page,
             @RequestParam(name="pageSize",defaultValue = "6")int size,
             @RequestParam(name = "search",required = false)String searchInput,
-            @RequestParam(name = "cate",required = false)String cate,
             @RequestParam(name = "start",required = false)@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate startTime,
             @RequestParam(name = "end",required = false )@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate endTime
     )
     {
 
         Pageable pageable = PageRequest.of(page-1, size, Sort.by("id").descending());
-        return postService.searchTitleAndDescription(pageable,searchInput,cate,null,startTime,endTime);
+        return postService.searchTitleAndDescription(pageable,searchInput,startTime,endTime);
     }
 
     @GetMapping("/tim-kiem")
