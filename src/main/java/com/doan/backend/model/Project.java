@@ -23,6 +23,7 @@ public class Project {
     private String description;
     @Column(columnDefinition = "text")
     private String content;
+    private String url;
     private Date createDate;
     private Date updateDate;
     @OneToOne(cascade = CascadeType.ALL)
@@ -35,11 +36,14 @@ public class Project {
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "member_id"))
     private Set<Member> members;
-    public Project(Long id, String name, String description, String content, Date createDate, Long status) {
+    @ManyToOne
+    private CateProject cateProject;
+    public Project(Long id, String name, String description, String content,String url, Date createDate, Long status) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.content = content;
+        this.url = url;
         this.createDate = createDate;
         this.status = status;
     }

@@ -26,6 +26,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.doan.backend.service.StringUtils.getSearchableString;
+
 @Service
 public class ProjectService {
 
@@ -44,7 +46,7 @@ public class ProjectService {
     public ProjectDTO getProjectById(Long id) {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new ResourceException("không tìm thấy"));
-        ProjectDTO projectDTO = new ProjectDTO(
+        return new ProjectDTO(
                 project.getId(),
                 project.getName(),
                 project.getDescription(),
@@ -54,7 +56,6 @@ public class ProjectService {
                 project.getStatus(),
                 memberRepository.getListMemberByProject(project.getId())
         );
-        return projectDTO;
     }
 
     public Project createOrUpdate(ProjectDTO projectDTO, MultipartFile file) throws IOException {
@@ -69,6 +70,7 @@ public class ProjectService {
         newProject.setUpdateDate(new Date());
         newProject.setContent(projectDTO.getContent());
         newProject.setDescription(projectDTO.getDescription());
+        newProject.setUrl(getSearchableString(projectDTO.getName()));
         newProject.setStatus(0L);
         if(file!=null){
             newProject.setImage(fileService.uploadImage(file));

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -17,5 +18,7 @@ public class CateProject {
     private Long id;
     private String typeName;
     private String cateUrl;
+    @OneToMany(mappedBy = "cateProject")
+    private List<Project> projects;
 
 }
