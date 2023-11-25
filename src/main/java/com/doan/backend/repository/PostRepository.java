@@ -31,7 +31,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("SELECT p FROM Post p WHERE " +
             "(:si IS NULL OR (LOWER(p.title) LIKE LOWER(concat('%', :si , '%')) " +
             "OR LOWER(p.description) LIKE LOWER(concat('%', :si , '%')))) " +
-            "AND((:start IS NULL AND :end IS NULL) OR(p.createDate BETWEEN :start AND :end))" +
+            "AND((:start IS NULL AND :end IS NULL) OR(p.date BETWEEN :start AND :end))" +
             "AND p.active=true")
 
     Page<Post> searchTitleDescriptionAndCategory(Pageable pageable,

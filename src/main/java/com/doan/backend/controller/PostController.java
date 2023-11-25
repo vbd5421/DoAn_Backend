@@ -21,7 +21,7 @@ import java.time.LocalDate;
 
 
 @RestController
-@RequestMapping("/bpost")
+@RequestMapping("/api/bpost")
 public class PostController {
     @Autowired
     private PostService postService;
