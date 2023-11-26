@@ -26,11 +26,11 @@ public class CateProjectController {
         return ResponseEntity.ok(catrProjectService.getCateById(id));
     }
     @PostMapping("/create")
-    public ResponseEntity<?> createCateProject(@RequestPart CateProject cateProject) {
+    public ResponseEntity<?> createCateProject(@RequestBody CateProject cateProject) {
         return ResponseEntity.ok(catrProjectService.addOrUpdateCate(cateProject));
     }
     @PostMapping("/update")
-    public ResponseEntity<?> updateCateProject(@RequestPart CateProject cateProject) {
+    public ResponseEntity<?> updateCateProject(@RequestBody CateProject cateProject) {
         return ResponseEntity.ok(catrProjectService.addOrUpdateCate(cateProject));
     }
     @PostMapping("/delete/{id}")

@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CateprojectRepository extends JpaRepository<CateProject,Long> {
     @Query("select c from CateProject c " +
-            "where (:si is null or lower(c.typeName) like ('%'||lower(:si)||'%' ) )")
+            "where (:si is null or lower(c.typeName) like ('%'||lower(:si)||'%' ) ) order by c.id desc ")
     Page<CateProject> getListCateProject(Pageable pageable, @Param("si")String searchInput);
 }
