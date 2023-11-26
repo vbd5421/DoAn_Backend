@@ -1,5 +1,6 @@
 package com.doan.backend.dto;
 
+import com.doan.backend.model.CateProject;
 import com.doan.backend.model.Image;
 import com.doan.backend.model.Member;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,7 @@ public class ProjectDTO {
     private String content;
     private Image image;
     private Date date;
-    private Long cateId;
+    private CateProject cateProject;
     //0, đang triển khai;1 đã hoàn thành
     private Long status;
 

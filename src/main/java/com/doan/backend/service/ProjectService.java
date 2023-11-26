@@ -62,6 +62,7 @@ public class ProjectService {
                 project.getContent(),
                 project.getImage(),
                 project.getCreateDate(),
+                project.getCateProject(),
                 project.getStatus(),
                 memberRepository.getListMemberByProject(project.getId())
         );
@@ -75,14 +76,13 @@ public class ProjectService {
         } else {
             newProject.setCreateDate(new Date());
         }
-        CateProject cateProject = cateprojectRepository.findById(projectDTO.getCateId())
-                        .orElseThrow(() -> new ResourceException("không tìm thấy chuyên mục"));
+
         newProject.setName(projectDTO.getName());
         newProject.setUpdateDate(new Date());
         newProject.setContent(projectDTO.getContent());
         newProject.setDescription(projectDTO.getDescription());
         newProject.setUrl(getSearchableString(projectDTO.getName()));
-        newProject.setCateProject(cateProject);
+        newProject.setCateProject(projectDTO.getCateProject());
         newProject.setStatus(0L);
         if(file!=null){
             newProject.setImage(fileService.uploadImage(file));
