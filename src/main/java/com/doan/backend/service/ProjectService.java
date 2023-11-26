@@ -2,9 +2,11 @@ package com.doan.backend.service;
 
 import com.doan.backend.dto.ProjectDTO;
 import com.doan.backend.exception.ResourceException;
+import com.doan.backend.model.CateProject;
 import com.doan.backend.model.Member;
 import com.doan.backend.model.Product;
 import com.doan.backend.model.Project;
+import com.doan.backend.repository.CateprojectRepository;
 import com.doan.backend.repository.MemberRepository;
 import com.doan.backend.repository.ProductRepository;
 import com.doan.backend.repository.ProjectRepository;
@@ -39,6 +41,9 @@ public class ProjectService {
     MemberRepository memberRepository;
 
     @Autowired
+    CateprojectRepository cateprojectRepository;
+
+    @Autowired
     private FileService fileService;
 
     public Page<Project> getAllProject(String name, Pageable pageable) {
@@ -70,11 +75,14 @@ public class ProjectService {
         } else {
             newProject.setCreateDate(new Date());
         }
+        CateProject cateProject = cateprojectRepository.findById(projectDTO.getCateId())
+                        .orElseThrow(() -> new ResourceException("không tìm thấy chuyên mục"));
         newProject.setName(projectDTO.getName());
         newProject.setUpdateDate(new Date());
         newProject.setContent(projectDTO.getContent());
         newProject.setDescription(projectDTO.getDescription());
         newProject.setUrl(getSearchableString(projectDTO.getName()));
+        newProject.setCateProject(cateProject);
         newProject.setStatus(0L);
         if(file!=null){
             newProject.setImage(fileService.uploadImage(file));
