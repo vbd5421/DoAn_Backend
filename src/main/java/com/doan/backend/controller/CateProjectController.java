@@ -5,6 +5,7 @@ import com.doan.backend.service.CatrProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,11 @@ public class CateProjectController {
                                                @RequestParam(name = "search",required = false)String searchInput){
         Pageable pageable = PageRequest.of(page-1, size);
         return ResponseEntity.ok(catrProjectService.getListCateProject(pageable,searchInput));
+    }
+    @GetMapping("/all")
+    public ResponseEntity<?> getListAllCateProject() {
+        Sort sort = Sort.by(Sort.Direction.DESC,"id");
+        return ResponseEntity.ok(catrProjectService.getAllCateProject(sort));
     }
     @GetMapping("/{id}")
     public ResponseEntity<?> getCateProjectById(@PathVariable Long id) {
