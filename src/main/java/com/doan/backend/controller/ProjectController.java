@@ -30,7 +30,7 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.getAllProject(name,pageable));
 
     }
-
+    @GetMapping("/all")
     ResponseEntity<?> getListAllProject() {
         Sort sort = Sort.by(Sort.Direction.DESC,"id");
         return ResponseEntity.ok(projectService.getListAllProject(sort));
