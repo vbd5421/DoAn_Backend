@@ -9,6 +9,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,6 +44,9 @@ public class MemberService {
                 memberRepository.getListProductName(member.getId())
         ));
 
+    }
+    public List<Member> getAllMember(Sort sort) {
+        return memberRepository.findAll(sort);
     }
 
     public MemberDTO getMemberbyId(Long id) {

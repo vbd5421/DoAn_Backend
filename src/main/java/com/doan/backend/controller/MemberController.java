@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,12 @@ public class MemberController {
         Pageable pageable = PageRequest.of(page-1, size);
         return ResponseEntity.ok(memberService.getListMember(pageable,searchInput));
 
+    }
+
+    @GetMapping("/all")
+    ResponseEntity<?> getAllMember() {
+        Sort sort = Sort.by(Sort.Direction.DESC,"id");
+        return ResponseEntity.ok(memberService.getAllMember(sort));
     }
 
     /**

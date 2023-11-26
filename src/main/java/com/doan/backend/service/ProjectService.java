@@ -13,6 +13,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,6 +43,9 @@ public class ProjectService {
 
     public Page<Project> getAllProject(String name, Pageable pageable) {
        return projectRepository.getAllProject(name,pageable);
+    }
+    public List<Project> getListAllProject(Sort sort) {
+        return projectRepository.findAll(sort);
     }
     public ProjectDTO getProjectById(Long id) {
         Project project = projectRepository.findById(id)

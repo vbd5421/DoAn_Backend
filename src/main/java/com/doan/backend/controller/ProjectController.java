@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,12 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.getAllProject(name,pageable));
 
     }
+
+    ResponseEntity<?> getListAllProject() {
+        Sort sort = Sort.by(Sort.Direction.DESC,"id");
+        return ResponseEntity.ok(projectService.getListAllProject(sort));
+    }
+
     @GetMapping("/{id}")
     ResponseEntity<?> getProjectById(@PathVariable Long id) {
         return ResponseEntity.ok(projectService.getProjectById(id));
