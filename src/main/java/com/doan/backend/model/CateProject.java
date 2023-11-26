@@ -18,7 +18,7 @@ public class CateProject {
     private Long id;
     private String typeName;
     private String cateUrl;
-    @OneToMany(mappedBy = "cateProject")
+    @OneToMany(mappedBy = "cateProject",cascade = CascadeType.ALL)
     private List<Project> projects;
 
 }
