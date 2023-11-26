@@ -7,7 +7,7 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.Set;
-
+import java.time.LocalDate;
 @Entity
 @Table
 @Data
@@ -16,18 +16,37 @@ import java.util.Set;
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
+//
+//    private Boolean active;
+//    private String description;
+//    private String title;
+//    @Column(columnDefinition = "text")
+//    private String content;
+//    private String createDate;
+//    private String updateDate;
+//    private String url;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name="image_id")
+//    private Image image;
     private Long id;
 
-    private Boolean active;
-    private String description;
     private String title;
+    @Column(columnDefinition = "text")
     private String content;
-    private String createDate;
-    private String updateDate;
-    private String url;
+    @Column(columnDefinition = "text")
+    private String description;
+
+    //    @JsonFormat(pattern="dd-MM-yyyy")
+    @Column(name="created_date")
+    private LocalDate date;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="image_id")
     private Image image;
+    private String url;
+    private Boolean active;
+
     @Nullable
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "post_hashtag",

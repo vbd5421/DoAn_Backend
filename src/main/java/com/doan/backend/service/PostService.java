@@ -65,8 +65,8 @@ public class PostService {
         post.setTitle(title);
         post.setContent(content);
         post.setDescription(description);
-        post.setCreateDate((new Date()).toString());
-        post.setUpdateDate((new Date()).toString());
+        post.setDate(LocalDate.now());
+//        post.setUpdateDate((new Date()).toString());
         if (file != null) {
             post.setImage(imageRepository.save(fileService.uploadImage(file)));
         }
@@ -112,7 +112,7 @@ public class PostService {
         updatePost.setTitle(title);
         updatePost.setContent(content);
         updatePost.setDescription(description);
-        updatePost.setUpdateDate((new Date()).toString());
+        updatePost.setDate(LocalDate.now());
         if (file != null) {
             updatePost.setImage(imageRepository.save(fileService.uploadImage(file)));
         }
