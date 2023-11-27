@@ -36,6 +36,7 @@ public class Project {
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "member_id"))
     private Set<Member> members;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cate_project_id")
     private CateProject cateProject;

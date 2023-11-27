@@ -46,8 +46,8 @@ public class ProjectService {
     @Autowired
     private FileService fileService;
 
-    public Page<Project> getAllProject(String name, Pageable pageable) {
-       return projectRepository.getAllProject(name,pageable);
+    public Page<Project> getAllProject(String name,Long cateId, Pageable pageable) {
+       return projectRepository.getAllProject(name,cateId,pageable);
     }
     public List<Project> getListAllProject(Sort sort) {
         return projectRepository.findAll(sort);
