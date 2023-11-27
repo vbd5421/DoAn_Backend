@@ -1,5 +1,6 @@
 package com.doan.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ public class CateProject {
     private String typeName;
     private String cateUrl;
     @OneToMany(mappedBy = "cateProject",cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Project> projects;
 
 }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CatrProjectService {
+public class CateProjectService {
     @Autowired
     CateprojectRepository cateprojectRepository;
 
@@ -35,7 +35,6 @@ public class CatrProjectService {
         }
         newCateProject.setTypeName(cateProject.getTypeName());
         newCateProject.setCateUrl(cateProject.getCateUrl());
-        newCateProject.setProjects(cateProject.getProjects());
         return cateprojectRepository.save(newCateProject);
     }
     public void deleteCateProject(Long id) {

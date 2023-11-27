@@ -69,6 +69,7 @@ public class ProjectService {
     }
 
     public Project createOrUpdate(ProjectDTO projectDTO, MultipartFile file) throws IOException {
+        System.out.println(projectDTO.getCateProject().toString());
         Project newProject = new Project();
         if (projectDTO.getId() != null) {
             newProject = projectRepository.findById(projectDTO.getId())
