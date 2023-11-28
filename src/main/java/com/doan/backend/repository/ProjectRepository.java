@@ -15,7 +15,7 @@ import java.util.List;
 public interface ProjectRepository extends JpaRepository<Project,Long> {
     @Query("select p from Project p " +
             "where (:name is null or ( LOWER(p.name)  LIKE LOWER(concat('%', :name , '%')))) " +
-            "and (:cateId is null or p.cateProject.id = :cateId)" +
+            "and ( :cateId is null or p.cateProject.id = :cateId) " +
             "order by p.createDate desc ")
     Page<Project> getAllProject(@Param("name") String name,@Param("cateId")Long cateId,Pageable pageable);
 
