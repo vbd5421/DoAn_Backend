@@ -40,8 +40,8 @@ public class MemberService {
                 member.getEmail(),
                 member.getPosition(),
                 member.getDegree(),
-                memberRepository.getListProjectName(member.getId()),
-                memberRepository.getListProductName(member.getId())
+                memberRepository.getListProductName(member.getId()),
+                memberRepository.getListProjectName(member.getId())
         ));
 
     }

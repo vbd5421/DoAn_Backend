@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -19,7 +20,8 @@ public class ProjectDTO {
     private String description;
     private String content;
     private Image image;
-    private Date date;
+    private Date createDate;
+    private LocalDate date;
     private CateProject cateProject;
     //0, đang triển khai;1 đã hoàn thành
     private Long status;
@@ -27,7 +29,7 @@ public class ProjectDTO {
     private List<Member> members;
 
     public ProjectDTO(Long id, String name, String description,
-                      String content, Image image, Date date, Long status, List<Member> members) {
+                      String content, Image image, LocalDate date, Long status, List<Member> members) {
         this.id = id;
         this.name = name;
         this.description = description;

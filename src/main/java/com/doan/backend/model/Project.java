@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -25,8 +26,8 @@ public class Project {
     @Column(columnDefinition = "text")
     private String content;
     private String url;
-    private Date createDate;
-    private Date updateDate;
+    private Date createDate; // time triển khai
+    private LocalDate updateDate; //
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="image_id")
     private Image image;
@@ -37,7 +38,7 @@ public class Project {
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "member_id"))
     private Set<Member> members;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "cate_project_id")
     private CateProject cateProject;
     public Project(Long id, String name, String description, String content,String url, Date createDate, Long status) {

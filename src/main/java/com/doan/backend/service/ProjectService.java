@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -62,6 +63,7 @@ public class ProjectService {
                 project.getContent(),
                 project.getImage(),
                 project.getCreateDate(),
+                project.getUpdateDate(),
                 project.getCateProject(),
                 project.getStatus(),
                 memberRepository.getListMemberByProject(project.getId())
@@ -79,7 +81,8 @@ public class ProjectService {
         }
 
         newProject.setName(projectDTO.getName());
-        newProject.setUpdateDate(new Date());
+        newProject.setCreateDate(projectDTO.getCreateDate());
+        newProject.setUpdateDate(LocalDate.now());
         newProject.setContent(projectDTO.getContent());
         newProject.setDescription(projectDTO.getDescription());
         newProject.setUrl(getSearchableString(projectDTO.getName()));
