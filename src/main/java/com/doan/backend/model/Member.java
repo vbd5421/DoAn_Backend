@@ -3,9 +3,11 @@ package com.doan.backend.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Data
@@ -22,7 +24,9 @@ public class Member {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="image_id")
     private Image image;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date birthDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date timeJoin;
 
     private String phone;

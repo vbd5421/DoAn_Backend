@@ -26,7 +26,7 @@ import java.net.URL;
 import java.util.List;
 
 @RestController
-@RequestMapping("/s/file")
+@RequestMapping("/api/file")
 public class FileController {
 
     @Autowired

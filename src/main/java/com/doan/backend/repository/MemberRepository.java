@@ -20,9 +20,9 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
             "on m.id = pm.member_id where pm.project_id = :projectId",nativeQuery = true)
     List<Member> getListMemberByProject(Long projectId);
     @Query("SELECT m from Member m " +
-            "where (:si is null or lower(m.fullName) like ('%'||:si||'%')) " +
-            "and (:si is null or m.degree = :si) " +
-            "and(:si is null or m.position = :si)  ORDER BY m.id DESC ")
+            "where ( :si is null or ( lower (m.fullName) like lower (concat('%', :si , '%'))" +
+            "or lower (m.position) like lower (concat('%', :si , '%')))) " +
+            "ORDER BY m.id DESC ")
     Page<Member> getListMember(Pageable pageable, @Param("si")String searchInput);
 
     @Query(value = "SELECT p.title From member m " +

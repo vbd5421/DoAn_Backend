@@ -31,13 +31,7 @@ public class SecurityConfig {
 
     private static final String[] AUTH_WHITELIST = { "/auth/**", "/admin/user",
 //            "/admin/login",
-//            "/number/**","/blog/**",
             "/api/**","/user/**","/role/**",
-//            "/news/**","/sliders/**","/tImage/**",
-//            "/s/file/**","/customer/**","/images/**","/recruit/**",
-//            "/nav/**", "/comment/**", "/post/**", "/product/**","/contact/**",
-//            "/about/**", "/hashtag/**", "/category/**","/history/**","/permission/**",
-//            "/bpost/**","/tImage/**","/history/log","/static/**","/address/**","/module/**"
     };
 
     @Bean
