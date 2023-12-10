@@ -55,6 +55,11 @@ public class ProductService {
                 memberRepository.getListMemberByProduct(product.getId())
         );
     }
+    public ProductDTO getProductByUrl(String url) {
+        Product product = productRepository.findByUrl(url)
+                .orElseThrow(() -> new ResourceException("url khong ton tai"));
+        return convert2DTO(product);
+    }
     public Product createOrUpdate(ProductDTO productDTO, MultipartFile file) throws IOException {
 //        System.out.println(productDTO.getContent());
         Product newProduct = new Product();
@@ -98,4 +103,17 @@ public class ProductService {
         System.out.println(product.getContent());
         productRepository.delete(product);
     }
+    private ProductDTO convert2DTO(Product product){
+        return new ProductDTO(
+                product.getId(),
+                product.getTitle(),
+                product.getContent(),
+                product.getDescription(),
+                product.getDate(),
+                product.getImage() != null ? product.getImage():null,
+                product.getUrl(),
+                memberRepository.getListMemberByProduct(product.getId())
+        );
+    }
+
 }

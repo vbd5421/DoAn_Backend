@@ -2,6 +2,7 @@ package com.doan.backend.service;
 
 
 import com.doan.backend.model.Image;
+import com.doan.backend.model.Sliders;
 import com.doan.backend.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -145,5 +146,57 @@ public class FileService {
         } else {
             System.out.println("Thất bại khi tải ảnh xuống. Status code: " + response.getStatusCode());
         }
+    }
+    public Sliders uploadSliders(MultipartFile file) throws IOException {
+
+        if(file!=null){
+            //create folder following year/month
+
+            try{
+                if (!Files.exists(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath).resolve(folderPath))) {
+                    Files.createDirectories(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath).resolve(folderPath));
+                }
+            }catch (Exception ex) {
+                throw new RuntimeException(
+                        "hông thể tạo đường dẫn cho ảnh.", ex);
+            }
+
+            Instant instant = Instant.now();
+            String filename = instant.toEpochMilli() + "_" + file.getOriginalFilename();
+
+            //Tạo 1 đường dẫn mới để lưu file ở local
+            try (InputStream inputStream = file.getInputStream()) {
+                Path filePath = CURRENT_FOLDER.resolve(staticPath).resolve(imagePath)
+                        .resolve(folderPath).resolve(filename);
+
+
+                Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException ioe) {
+                throw new IOException("Không thể lưu ảnh có tên là: " + filename, ioe);
+            }
+            System.gc();
+
+            String absoluteURL = ServletUriComponentsBuilder.fromCurrentContextPath().path("/images/").path(folderPath.toString()).path("/").path(filename).toUriString();
+            UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromUriString(absoluteURL);
+            String path = uriComponentsBuilder.build().getPath();
+//            Sliders sliders = slidersRepository.findAllByName(filename);
+//            if (sliders==null){
+            return new Sliders(
+                    filename,
+                    file.getOriginalFilename(),
+                    staticPath.resolve(imagePath).resolve(folderPath).toString(),
+                    path,
+                    file.getContentType(),
+                    true,
+                    true
+            );
+
+
+
+        }else{
+            return null;
+        }
+
+
     }
 }

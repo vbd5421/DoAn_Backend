@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.doan.backend.service.StringUtils.getSearchableString;
+
 @Service
 public class MemberService {
     @Autowired
@@ -38,10 +40,12 @@ public class MemberService {
                 member.getTimeJoin(),
                 member.getPhone(),
                 member.getEmail(),
+                member.getUrl(),
                 member.getPosition(),
                 member.getDegree(),
                 memberRepository.getListProductName(member.getId()),
-                memberRepository.getListProjectName(member.getId())
+                memberRepository.getListProjectName(member.getId()),
+                member.getExternalProject()
         ));
 
     }
@@ -52,22 +56,13 @@ public class MemberService {
     public MemberDTO getMemberbyId(Long id) {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new ResourceException("Không tìm thấy thành viên"));
-        List<String> listProjectName = memberRepository.getListProjectName(id);
-        List<String> listProductName = memberRepository.getListProductName(id);
-        return new MemberDTO(
-                member.getId(),
-                member.getFullName(),
-                member.getDescription(),
-                member.getImage() != null ? member.getImage():null,
-                member.getBirthDate(),
-                member.getTimeJoin(),
-                member.getPhone(),
-                member.getEmail(),
-                member.getPosition(),
-                member.getDegree(),
-                listProductName,
-                listProjectName
-        );
+
+        return convert2DTO(member);
+    }
+    public MemberDTO getMemberByUrl(String url) {
+        Member member = memberRepository.findByUrl(url)
+                .orElseThrow(() -> new ResourceException("url khong ton tai"));
+        return convert2DTO(member);
     }
     public Member AddOrUpdate(MemberDTO memberDTO, MultipartFile file) throws IOException {
         Member member = new Member();
@@ -81,8 +76,10 @@ public class MemberService {
         member.setTimeJoin(memberDTO.getTimeJoin());
         member.setPhone(memberDTO.getPhone());
         member.setEmail(memberDTO.getEmail());
+        member.setUrl(getSearchableString(memberDTO.getFullName()));
         member.setPosition(memberDTO.getPosition());
         member.setDegree(memberDTO.getDegree());
+        member.setExternalProject(memberDTO.getExternalProject());
         if(file != null) {
             member.setImage(fileService.uploadImage(file));
         }
@@ -102,6 +99,27 @@ public class MemberService {
         }
 
     }
+    private MemberDTO convert2DTO(Member member) {
+        return new MemberDTO(
+                member.getId(),
+                member.getFullName(),
+                member.getDescription(),
+                member.getImage() != null ? member.getImage():null,
+                member.getBirthDate(),
+                member.getTimeJoin(),
+                member.getPhone(),
+                member.getEmail(),
+                member.getUrl(),
+                member.getPosition(),
+                member.getDegree(),
+                memberRepository.getListProductName(member.getId()),
+                memberRepository.getListProjectName(member.getId()),
+                member.getExternalProject()
+        );
+    }
+
+
+
 
     public void deleteMember(Long id) {
         Member member = memberRepository.findById(id)

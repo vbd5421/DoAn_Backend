@@ -20,13 +20,15 @@ public class MemberDTO {
 
     private String phone;
     private String email;
+    private String url;
     private String position;
     private String degree;
     private List<String> productName;
     private List<String> projectName;
+    private String externalProject;
 
     public MemberDTO(String fullName, String description, Image image, Date birthDate, Date timeJoin,
-                     String phone, String email, String position, String degree, List<String> productName,
+                     String phone, String email, String url, String position, String degree, List<String> productName,
                      List<String> projectName) {
         this.fullName = fullName;
         this.description = description;
@@ -35,6 +37,7 @@ public class MemberDTO {
         this.timeJoin = timeJoin;
         this.phone = phone;
         this.email = email;
+        this.url = url;
         this.position = position;
         this.degree = degree;
         this.productName = productName;

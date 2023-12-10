@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member,Long> {
@@ -40,4 +41,6 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
 
     @Query("SELECT m.image.pathFile FROM Member m WHERE m.id=:id")
     String getPathFileByMember(Long id);
+
+    Optional<Member> findByUrl(String url);
 }

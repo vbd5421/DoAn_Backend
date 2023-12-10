@@ -31,8 +31,9 @@ public class Member {
 
     private String phone;
     private String email;
-
+    private String url;
     private String position;
     private String degree;
+    private String externalProject;
 
 }

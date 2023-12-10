@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project,Long> {
@@ -23,4 +24,6 @@ public interface ProjectRepository extends JpaRepository<Project,Long> {
     String getImageByProjectId(Long id);
     @Query("SELECT p.image.pathFile FROM Project p WHERE p.id=:id")
     String getPathFileByProjectId(Long id);
+
+    Optional<Project> findByUrl(String url);
 }

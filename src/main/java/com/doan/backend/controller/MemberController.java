@@ -44,6 +44,10 @@ public class MemberController {
     ResponseEntity<?> getMemberById(@PathVariable Long id) {
         return ResponseEntity.ok(memberService.getMemberbyId(id));
     }
+    @GetMapping("/home/{url}")
+    public ResponseEntity<?> getByUrl(@PathVariable("url") String url) {
+        return ResponseEntity.ok(memberService.getMemberByUrl(url));
+    }
     @PostMapping("/create")
     ResponseEntity<?> addMember(@RequestPart MemberDTO memberDTO,
                                 @RequestPart(required = false) MultipartFile file) throws IOException {
@@ -55,7 +59,7 @@ public class MemberController {
         return ResponseEntity.ok(memberService.AddOrUpdate(memberDTO,file));
     }
     @GetMapping("/image/{id}")
-    public ResponseEntity<Resource> getImageByPostId(@PathVariable Long id) throws MalformedURLException {
+    public ResponseEntity<Resource> getImageById(@PathVariable Long id) throws MalformedURLException {
         return ResponseEntity.ok(memberService.getImageByMemberId(id));
     }
     @PostMapping("/delete/{id}")

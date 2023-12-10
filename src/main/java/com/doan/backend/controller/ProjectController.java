@@ -41,6 +41,10 @@ public class ProjectController {
     ResponseEntity<?> getProjectById(@PathVariable Long id) {
         return ResponseEntity.ok(projectService.getProjectById(id));
     }
+    @GetMapping("/home/{url}")
+    public ResponseEntity<?> getByUrl(@PathVariable("url") String url) {
+        return ResponseEntity.ok(projectService.getProjectByUrl(url));
+    }
     @PostMapping("/create")
     ResponseEntity<?> createProject(@RequestPart ProjectDTO project,
                                     @RequestPart(required = false) MultipartFile file) throws IOException {

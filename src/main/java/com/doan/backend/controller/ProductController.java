@@ -27,7 +27,7 @@ public class ProductController {
     ProductService productService;
     @GetMapping("")
     ResponseEntity<?> getAllProduct(@RequestParam(name="pageNo",defaultValue = "1")int page,
-                                    @RequestParam(name="pageSize",defaultValue = "4")int size,
+                                    @RequestParam(name="pageSize",defaultValue = "20")int size,
                                     @RequestParam(name="name",required = false)String name) {
         Pageable pageable = PageRequest.of(page-1, size, Sort.by(Sort.Direction.DESC,"date"));
         return ResponseEntity.ok(productService.getAllProduct(name,pageable));
@@ -36,6 +36,10 @@ public class ProductController {
     @GetMapping("/{id}")
     ResponseEntity<?> getProjectById(@PathVariable Long id) {
         return ResponseEntity.ok(productService.getProductById(id));
+    }
+    @GetMapping("/home/{url}")
+    public ResponseEntity<?> getByUrl(@PathVariable("url") String url) {
+        return ResponseEntity.ok(productService.getProductByUrl(url));
     }
     @PostMapping("/create")
     ResponseEntity<?> createproduct(@RequestPart ProductDTO product,

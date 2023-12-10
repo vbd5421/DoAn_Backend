@@ -56,20 +56,13 @@ public class ProjectService {
     public ProjectDTO getProjectById(Long id) {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new ResourceException("không tìm thấy"));
-        return new ProjectDTO(
-                project.getId(),
-                project.getName(),
-                project.getDescription(),
-                project.getContent(),
-                project.getImage(),
-                project.getCreateDate(),
-                project.getUpdateDate(),
-                project.getCateProject(),
-                project.getStatus(),
-                memberRepository.getListMemberByProject(project.getId())
-        );
+        return convert2DTO(project);
     }
-
+    public ProjectDTO getProjectByUrl(String url) {
+        Project project = projectRepository.findByUrl(url)
+                .orElseThrow(() -> new ResourceException("url khong ton tai"));
+        return convert2DTO(project);
+    }
     public Project createOrUpdate(ProjectDTO projectDTO, MultipartFile file) throws IOException {
 
         Project newProject = new Project();
@@ -117,5 +110,19 @@ public class ProjectService {
         Project project = projectRepository.findById(id)
                 .orElseThrow(() -> new ResourceException("Không tìm thấy project"));
         projectRepository.delete(project);
+    }
+    private ProjectDTO convert2DTO(Project project) {
+        return new ProjectDTO(
+                project.getId(),
+                project.getName(),
+                project.getDescription(),
+                project.getContent(),
+                project.getImage(),
+                project.getCreateDate(),
+                project.getUpdateDate(),
+                project.getCateProject(),
+                project.getStatus(),
+                memberRepository.getListMemberByProject(project.getId())
+        );
     }
 }
