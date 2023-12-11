@@ -19,7 +19,7 @@ import java.net.MalformedURLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tImage")
+@RequestMapping("/api/tImage")
 public class TypicalImageController {
     @Autowired
     private TypicalImageService typicalImageService;

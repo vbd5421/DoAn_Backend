@@ -26,7 +26,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/contact")
+@RequestMapping("/api/contact")
 public class ContactUserController {
     private final ContactUserService contactUserService ;
 

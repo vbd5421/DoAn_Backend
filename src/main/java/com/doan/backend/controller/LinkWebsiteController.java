@@ -18,9 +18,9 @@ public class LinkWebsiteController {
 
     @GetMapping("")
     public ResponseEntity<?> getAllLink(@RequestParam(name="pageNo",defaultValue = "1")int page,
-                                        @RequestParam(name="pageSize",defaultValue = "10")int size,
+                                        @RequestParam(name="pageSize",defaultValue = "20")int size,
                                         @RequestParam(name = "name",required = false)String name) {
-        Sort sort = Sort.by(Sort.Direction.DESC,"id");
+        //Sort sort = Sort.by(Sort.Direction.DESC,"id");
         Pageable pageable = PageRequest.of(page-1, size);
         return ResponseEntity.ok(linkWebsiteService.getAllLink(pageable, name));
     }

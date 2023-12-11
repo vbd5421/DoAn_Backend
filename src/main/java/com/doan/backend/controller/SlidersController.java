@@ -16,7 +16,7 @@ import java.net.MalformedURLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/sliders")
+@RequestMapping("/api/sliders")
 public class SlidersController {
     @Autowired
     private SlidersService slidersService;
