@@ -12,14 +12,12 @@ public class Address {
     @Column(name = "address_id")
     private Long id;
 
-    private String prefix; // khu vuc
-
     @Column(columnDefinition = "text")
     private String address; // dia chi
 
-    private String province;
-
     private String district;
+
+    private String city;
 
     private String wards;
 }
