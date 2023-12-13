@@ -1,6 +1,8 @@
 package com.doan.backend.controller;
 
 
+import com.doan.backend.dto.User.UserDTO;
+import com.doan.backend.model.Users;
 import com.doan.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,5 +29,21 @@ public class UserController {
     @GetMapping("/{id}")
     ResponseEntity<?> findUserById(@PathVariable Long id) {
         return new ResponseEntity<>(userService.findUserById(id),HttpStatus.OK);
+    }
+    @PostMapping(value = "/user/update/{id}")
+    public ResponseEntity<Users> updateUser(@PathVariable("id")Long id,
+                                            @RequestBody UserDTO userDTO
+    )
+    {
+        return ResponseEntity.ok().body(userService.updateUser(id,userDTO));
+    }
+    @PostMapping("/user/delete/{id}")
+    public void delete(@PathVariable("id") Long id){
+        userService.delete(id);
+    }
+
+    @PostMapping("/user/changePassword/{id}")
+    public ResponseEntity<Users> changePassword(@PathVariable Long id) {
+        return ResponseEntity.ok().body(userService.changePassword(id));
     }
 }

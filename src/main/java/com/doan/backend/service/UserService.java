@@ -5,6 +5,7 @@ import com.doan.backend.dto.User.UserResponseDTO;
 import com.doan.backend.exception.ResourceException;
 import com.doan.backend.model.Roles;
 import com.doan.backend.model.Users;
+import com.doan.backend.repository.RoleRepository;
 import com.doan.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,8 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private RoleRepository roleRepository;
     public List<UserResponseDTO> searchUsernameAndEmail( String searchInput) {
         //TO DO config searchInput
         return userRepository.searchUsernameAndEmail( searchInput)
@@ -41,6 +44,7 @@ public class UserService {
                 .orElseThrow(() -> new ResourceException("không tìm thấy user"));
         return user;
     }
+
 
     public Users updateUser(Long id, UserDTO userDTO) {
         Optional<Users> userOptional = userRepository.findById(id);
