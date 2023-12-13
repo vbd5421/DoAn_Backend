@@ -9,6 +9,7 @@ import com.doan.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,8 +21,7 @@ import java.util.stream.Collectors;
 public class UserService {
     @Autowired
     UserRepository userRepository;
-    @Autowired
-    private RoleService roleService;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     public List<UserResponseDTO> searchUsernameAndEmail( String searchInput) {
         //TO DO config searchInput
         return userRepository.searchUsernameAndEmail( searchInput)
@@ -75,5 +75,12 @@ public class UserService {
     }
     public void delete(Long id){
         userRepository.deleteById(id);
+    }
+
+    public Users changePassword(Long userId) {
+        Optional<Users> userOpt = userRepository.findById(userId);
+        Users user = userOpt.get();
+        user.setPassword(bCryptPasswordEncoder.encode("12345678"));
+        return userRepository.save(user);
     }
 }
