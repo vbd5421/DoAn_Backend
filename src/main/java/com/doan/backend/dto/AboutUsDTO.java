@@ -16,5 +16,7 @@ public class AboutUsDTO {
     private String phone;
     private String fax;
     private String email;
+    private String project;
+    private String member;
     private Collection<Address> addressCollection;
 }

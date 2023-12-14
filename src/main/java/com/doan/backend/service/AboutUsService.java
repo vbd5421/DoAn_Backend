@@ -52,17 +52,6 @@ public class AboutUsService {
         if (fax.isEmpty() || fax.length() > 15) { // check fax length
             throw new ResourceException("Vui lòng nhập số fax dưới 15 ký tự");
         }
-        //get email
-        String email = aboutUs.getEmail().trim();
-
-
-        aboutUs.setDescription(description);
-        aboutUs.setContent(content);
-        aboutUs.setVideoLINK(aboutUs.getVideoLINK().trim());
-        aboutUs.setContentUav(aboutUs.getContentUav());
-        aboutUs.setPhone(phone);
-        aboutUs.setFax(fax);
-        aboutUs.setEmail(email);
 
         aboutUsRepository.save(aboutUs); // save information
         return aboutUs;
@@ -124,9 +113,8 @@ public class AboutUsService {
         aboutUs.setPhone(phone);
         aboutUs.setFax(fax);
         aboutUs.setEmail(email);
-//        aboutUs.setAddress(address);
-        // save model
-//        addressRepository.saveAll(address); // save addresses
+        aboutUs.setProject(aboutUsDTO.getProject());
+        aboutUs.setMember(aboutUsDTO.getMember());
         aboutUsRepository.save(aboutUs); // save information
         return aboutUsRepository.getReferenceById(aboutUsDTO.getId());
     }
