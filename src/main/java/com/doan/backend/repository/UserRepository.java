@@ -24,7 +24,7 @@ public interface UserRepository extends JpaRepository<Users,Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE user_roles SET role_id =?1 WHERE user_id=?2", nativeQuery = true)
+    @Query(value = "UPDATE user_role SET role_id =?1 WHERE user_id=?2", nativeQuery = true)
     void updateRoleByUserId(Long roleId, Long userId);
 
     @Query("SELECT u FROM Users u WHERE " +
@@ -34,12 +34,12 @@ public interface UserRepository extends JpaRepository<Users,Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM user_roles ur WHERE ur.user_id=:id", nativeQuery = true)
+    @Query(value = "DELETE FROM user_role ur WHERE ur.user_id=:id", nativeQuery = true)
     void deleteRoleByUserId(@Param("id") Long id);
 
 
     @Query(value = "SELECT CASE WHEN COUNT(ur) > 0 THEN true ELSE false END " +
-            "FROM user_roles ur WHERE ur.user_id=:id", nativeQuery = true)
+            "FROM user_role ur WHERE ur.user_id=:id", nativeQuery = true)
 
     boolean findRoleUserById(@Param("id")Long id);
 

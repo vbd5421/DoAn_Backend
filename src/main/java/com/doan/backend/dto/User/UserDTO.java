@@ -22,9 +22,9 @@ public class UserDTO {
     private Roles role;
 //    private List<Role> role;
 
-    public UserDTO(Long id, String username, String email, String firstName, String lastName, Boolean active, Roles role) {
+    public UserDTO(Long id, String userName, String email, String firstName, String lastName, Boolean active, Roles role) {
         this.id = id;
-        this.username = username;
+        this.username = userName;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;

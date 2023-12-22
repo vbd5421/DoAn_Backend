@@ -35,16 +35,18 @@ public class Users {
     @JsonIgnore
     private String password;
 
+    private Boolean active;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_role",joinColumns = @JoinColumn(name = "user_id"),
                                   inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Roles> roles;
 
-    public Users(String userName, String email, String firstName, String lastName, String password) {
+    public Users(String userName, String email, String firstName, String lastName, String password ,  Boolean active) {
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.active = active;
     }
 }

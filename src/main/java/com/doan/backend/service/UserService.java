@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,7 +23,8 @@ import java.util.stream.Collectors;
 public class UserService {
     @Autowired
     UserRepository userRepository;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    PasswordEncoder passwordEncoder;
     @Autowired
     private RoleRepository roleRepository;
     public List<UserResponseDTO> searchUsernameAndEmail( String searchInput) {
@@ -34,15 +36,26 @@ public class UserService {
                                 user.getEmail(),
                                 user.getFirstName(),
                                 user.getLastName(),
+                                user.getActive(),
                                 user.getRoles()
                         )
                 ).collect(Collectors.toList());
     }
 
-    public Users findUserById(Long id){
+    public UserDTO findUserById(Long id){
         Users user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceException("không tìm thấy user"));
-        return user;
+        UserDTO useDTO = new UserDTO(
+                user.getId(),
+                user.getUserName(),
+                user.getEmail(),
+                user.getFirstName(),
+                user.getLastName(),
+
+                user.getActive(),
+                user.getRoles().get(0)
+        );
+        return useDTO;
     }
 
 
@@ -63,6 +76,8 @@ public class UserService {
         userFromBD.setEmail(email);
         userFromBD.setFirstName(firstName);
         userFromBD.setLastName(lastName);
+        userFromBD.setActive(true);
+        //userDto.setActive(user.getActive());
         List<Roles> roles = new ArrayList<>();
         roles.add(userDTO.getRole());
         if(roles != null){
@@ -84,7 +99,8 @@ public class UserService {
     public Users changePassword(Long userId) {
         Optional<Users> userOpt = userRepository.findById(userId);
         Users user = userOpt.get();
-        user.setPassword(bCryptPasswordEncoder.encode("12345678"));
+        System.out.println(user.toString());
+        user.setPassword(passwordEncoder.encode("12345678"));
         return userRepository.save(user);
     }
 }

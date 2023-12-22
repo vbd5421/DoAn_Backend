@@ -29,9 +29,9 @@ public class AboutUs {
     private String fax;
 
     private String email;
-
+    @Column(columnDefinition = "text")
     private String project;
-
+    @Column(columnDefinition = "text")
     private String member;
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)

@@ -44,7 +44,8 @@ public class AuthService {
                 ,registerRequest.getEmail()
                 ,registerRequest.getFirstName()
                 ,registerRequest.getLastName()
-                ,passwordEncoder.encode(registerRequest.getPassword())
+                ,passwordEncoder.encode(registerRequest.getPassword()),
+                true
         );
 
         List<String> strRoles =registerRequest.getRole();

@@ -30,19 +30,19 @@ public class UserController {
     ResponseEntity<?> findUserById(@PathVariable Long id) {
         return new ResponseEntity<>(userService.findUserById(id),HttpStatus.OK);
     }
-    @PostMapping(value = "/user/update/{id}")
+    @PostMapping(value = "/update/{id}")
     public ResponseEntity<Users> updateUser(@PathVariable("id")Long id,
                                             @RequestBody UserDTO userDTO
     )
     {
         return ResponseEntity.ok().body(userService.updateUser(id,userDTO));
     }
-    @PostMapping("/user/delete/{id}")
+    @PostMapping("/delete/{id}")
     public void delete(@PathVariable("id") Long id){
         userService.delete(id);
     }
 
-    @PostMapping("/user/changePassword/{id}")
+    @PostMapping("/changePassword/{id}")
     public ResponseEntity<Users> changePassword(@PathVariable Long id) {
         return ResponseEntity.ok().body(userService.changePassword(id));
     }
